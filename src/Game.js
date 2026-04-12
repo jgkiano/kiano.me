@@ -40,6 +40,30 @@ function hsSet(v) { localStorage.setItem('k-hs', String(v)); }
 
 // ── Draw helpers ──────────────────────────────────────────────
 
+function drawBackground(ctx, cw) {
+  // Base — barely lighter than page bg to give the game its own plane
+  ctx.fillStyle = '#0d0d0d';
+  ctx.fillRect(0, 0, cw, H);
+
+  // Subtle dot grid
+  ctx.fillStyle = '#181818';
+  const spacing = 24;
+  for (let x = spacing; x < cw; x += spacing) {
+    for (let y = spacing; y < H; y += spacing) {
+      ctx.beginPath();
+      ctx.arc(x, y, 0.75, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  // Faint cyan ground glow — echoes the site accent colour
+  const grd = ctx.createLinearGradient(0, GROUND - 40, 0, H);
+  grd.addColorStop(0, 'transparent');
+  grd.addColorStop(1, 'rgba(34, 211, 238, 0.04)');
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, GROUND - 40, cw, H - (GROUND - 40));
+}
+
 function drawMan(ctx, x, y, frame, airborne, img) {
   const bob  = airborne ? 0 : Math.sin(frame * 0.35) * 2.5;
   const size = airborne ? 84 : 76;
@@ -74,10 +98,18 @@ function drawPowerup(ctx, p, frame) {
 
   ctx.save();
 
-  // Pulsing glow
+  // Bloom glow — blur pass gives real brightness regardless of color profile
+  ctx.filter = 'blur(12px)';
+  ctx.beginPath();
+  ctx.arc(cx, cy, p.size / 2 + 4 + pulse, 0, Math.PI * 2);
+  ctx.fillStyle = `rgba(${colorRgb}, ${0.55 + Math.sin(frame * 0.1) * 0.1})`;
+  ctx.fill();
+  ctx.filter = 'none';
+
+  // Sharp inner glow ring
   ctx.beginPath();
   ctx.arc(cx, cy, p.size / 2 + 6 + pulse, 0, Math.PI * 2);
-  ctx.fillStyle = `rgba(${colorRgb}, ${0.18 + Math.sin(frame * 0.1) * 0.08})`;
+  ctx.fillStyle = `rgba(${colorRgb}, 0.22)`;
   ctx.fill();
 
   // Badge background (sits on ground)
@@ -88,9 +120,9 @@ function drawPowerup(ctx, p, frame) {
   const bh   = p.size + pad * 2;
   ctx.beginPath();
   ctx.roundRect(bx, by, bw, bh, 4);
-  ctx.fillStyle   = `rgba(${colorRgb}, 0.12)`;
+  ctx.fillStyle   = `rgba(${colorRgb}, 0.2)`;
   ctx.fill();
-  ctx.strokeStyle = `rgba(${colorRgb}, 0.55)`;
+  ctx.strokeStyle = `rgba(${colorRgb}, 0.9)`;
   ctx.lineWidth   = 1;
   ctx.stroke();
 
@@ -186,7 +218,7 @@ export default function Game() {
       const ctx = ctxRef.current;
       if (!ctx || gsRef.current) return;
       const cw = ctx.canvas.width / dprRef.current;
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      drawBackground(ctx, cw);
       drawMan(ctx, MAN_X, GROUND, 0, false, man);
       if (hsGet() > 0) drawHUD(ctx, 0, cw, 1, 0);
     };
@@ -272,7 +304,7 @@ export default function Game() {
         setDead({ score: sc, isNew });
         setPhase('dead');
         gsRef.current = null;
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        drawBackground(ctx, cw);
         drawMan(ctx, MAN_X, s.manY, s.frame, !s.grounded, imagesRef.current['_man']);
         for (const ob of s.obstacles) drawObs(ctx, ob, imagesRef.current);
         for (const p  of s.powerups)  drawPowerup(ctx, p, s.frame);
@@ -282,7 +314,7 @@ export default function Game() {
     }
 
     // Draw
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    drawBackground(ctx, cw);
     drawMan(ctx, MAN_X, s.manY, s.frame, !s.grounded, imagesRef.current['_man']);
     for (const o of s.obstacles) drawObs(ctx, o, imagesRef.current);
     for (const p  of s.powerups)  drawPowerup(ctx, p, s.frame);
@@ -337,7 +369,7 @@ export default function Game() {
     const ctx = ctxRef.current;
     if (!ctx || phase === 'playing') return;
     const cw = ctx.canvas.width / dprRef.current;
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    drawBackground(ctx, cw);
     drawMan(ctx, MAN_X, GROUND, 0, false, imagesRef.current['_man']);
     if (hsGet() > 0) drawHUD(ctx, 0, cw, 1, 0);
   }, [phase]);

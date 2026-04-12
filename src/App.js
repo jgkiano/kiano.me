@@ -1,23 +1,69 @@
-import logo from './logo.svg';
+import { Fragment } from 'react';
 import './App.css';
+import Typewriter from './Typewriter';
+
+// ── Config — update these with your details ──────────────────
+const config = {
+  name: 'Kiano',
+  title: '(Julius G.)',
+  about:
+    "Building and scaling systems used by Africa's top financial institutions. I architect for reliability, zero-downtime deployments and infrastructure that powers millions of users.",
+  links: [
+    { label: 'github', href: 'https://github.com/jgkiano' },
+    { label: 'linkedin', href: 'https://www.linkedin.com/in/kiano/' },
+    { label: 'email', href: 'mailto:hi@kiano.me' },
+  ],
+};
+// ─────────────────────────────────────────────────────────────
 
 function App() {
+  const year = new Date().getFullYear();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="page">
+      <main className="main">
+        <div className="content">
+          <Typewriter />
+
+          <h1 className="name">{config.name}</h1>
+          <p className="title">{config.title}</p>
+          <p className="tag">Senior Software Engineer</p>
+
+          <div className="divider" aria-hidden="true" />
+
+          <p className="about">{config.about}</p>
+
+          <div className="meta">
+            <div className="cta-group">
+              <a className="cta" href="https://calendly.com/hi-kiano" target="_blank" rel="noopener noreferrer">
+                Schedule a call
+              </a>
+              <a className="cta cta-ghost" href="mailto:hi@kiano.me">
+                hi@kiano.me
+              </a>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer className="footer">
+        <span className="footer-copy">{year}</span>
+        <nav className="footer-links" aria-label="Links">
+          {config.links.map(({ label, href }, i) => (
+            <Fragment key={label}>
+              {i > 0 && <span className="footer-dot" aria-hidden="true" />}
+              <a
+                className="link"
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              >
+                {label}
+              </a>
+            </Fragment>
+          ))}
+        </nav>
+      </footer>
     </div>
   );
 }

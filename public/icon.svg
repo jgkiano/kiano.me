@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Background -->
+  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <!-- K vertical bar (white) -->
+  <rect x="156" y="110" width="62" height="292" fill="#f4f4f5"/>
+  <!-- K upper arm (cyan) -->
+  <polygon points="218,195 380,110 380,172 218,260" fill="#22d3ee"/>
+  <!-- K lower arm (cyan) -->
+  <polygon points="218,252 380,340 380,402 218,316" fill="#22d3ee"/>
+</svg>

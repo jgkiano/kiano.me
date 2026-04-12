@@ -7,7 +7,7 @@ const config = {
   name: 'Kiano',
   title: '(Julius G.)',
   about:
-    "Building and scaling systems used by Africa's top financial institutions. I architect for reliability, zero-downtime deployments and infrastructure that powers millions of users.",
+    "Architecting for reliability, zero-downtime deployments, mobile applications, and infrastructure that powers millions of users.",
   links: [
     { label: 'github', href: 'https://github.com/jgkiano' },
     { label: 'linkedin', href: 'https://www.linkedin.com/in/kiano/' },

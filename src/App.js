@@ -1,6 +1,7 @@
 import { Fragment } from 'react';
 import './App.css';
 import Typewriter from './Typewriter';
+import Game from './Game';
 
 // ── Config — update these with your details ──────────────────
 const config = {
@@ -19,13 +20,36 @@ const config = {
 function App() {
   const year = new Date().getFullYear();
 
-  return (
+return (
     <div className="page">
+      <header className="site-header">
+        <nav className="header-links" aria-label="Links">
+          {config.links.map(({ label, href }, i) => (
+            <Fragment key={label}>
+              {i > 0 && <span className="footer-dot" aria-hidden="true" />}
+              <a
+                className="link"
+                href={href}
+                target={href.startsWith('mailto') ? undefined : '_blank'}
+                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
+              >
+                {label}
+              </a>
+            </Fragment>
+          ))}
+        </nav>
+      </header>
       <main className="main">
         <div className="content">
           <Typewriter />
 
-          <h1 className="name">{config.name}</h1>
+          <h1 className="name" aria-label={config.name}>
+            {config.name.split('').map((char, i) => (
+              <span key={i} className="name-char" style={{ '--i': i }}>
+                {char}
+              </span>
+            ))}
+          </h1>
           <p className="title">{config.title}</p>
           <p className="tag">Senior Software Engineer</p>
 
@@ -48,22 +72,8 @@ function App() {
 
       <footer className="footer">
         <span className="footer-copy">{year}</span>
-        <nav className="footer-links" aria-label="Links">
-          {config.links.map(({ label, href }, i) => (
-            <Fragment key={label}>
-              {i > 0 && <span className="footer-dot" aria-hidden="true" />}
-              <a
-                className="link"
-                href={href}
-                target={href.startsWith('mailto') ? undefined : '_blank'}
-                rel={href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-              >
-                {label}
-              </a>
-            </Fragment>
-          ))}
-        </nav>
       </footer>
+      <Game />
     </div>
   );
 }

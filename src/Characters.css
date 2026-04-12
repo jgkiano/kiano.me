@@ -1,0 +1,116 @@
+/* ── Stage — sits on the footer border line ─────────────────── */
+
+.char-stage {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+/* ── Horizontal walk ─────────────────────────────────────────── */
+
+.char-wrap {
+  position: absolute;
+  bottom: 0;
+  animation: char-walk linear infinite;
+  animation-duration: var(--dur);
+  animation-delay: var(--delay);
+}
+
+@keyframes char-walk {
+  from { transform: translateX(-60px); }
+  to   { transform: translateX(calc(100vw + 60px)); }
+}
+
+/* ── Stick figure limbs ──────────────────────────────────────── */
+
+.sf-larm {
+  transform-box: view-box;
+  transform-origin: 8px 11px;
+  animation: sf-arm 0.5s ease-in-out infinite alternate;
+}
+.sf-rarm {
+  transform-box: view-box;
+  transform-origin: 8px 11px;
+  animation: sf-arm 0.5s ease-in-out infinite alternate-reverse;
+}
+.sf-lleg {
+  transform-box: view-box;
+  transform-origin: 8px 19px;
+  animation: sf-leg 0.5s ease-in-out infinite alternate;
+}
+.sf-rleg {
+  transform-box: view-box;
+  transform-origin: 8px 19px;
+  animation: sf-leg 0.5s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes sf-arm {
+  from { transform: rotate(-22deg); }
+  to   { transform: rotate(22deg); }
+}
+@keyframes sf-leg {
+  from { transform: rotate(-28deg); }
+  to   { transform: rotate(28deg); }
+}
+
+/* ── Runner: faster + forward lean ──────────────────────────── */
+
+.char-runner .sf-larm,
+.char-runner .sf-rarm,
+.char-runner .sf-lleg,
+.char-runner .sf-rleg {
+  animation-duration: 0.25s;
+}
+.runner-lean {
+  display: inline-block;
+  transform: rotate(8deg);
+  transform-origin: bottom center;
+}
+
+/* ── Jumper: bouncy ──────────────────────────────────────────── */
+
+.sf-bounce {
+  display: inline-block;
+  animation: sf-bounce 0.4s cubic-bezier(0.36, 0, 0.66, -0.56) infinite alternate;
+}
+@keyframes sf-bounce {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-8px); }
+}
+
+/* ── Waver: right arm waves high ─────────────────────────────── */
+
+.char-waver .sf-rarm {
+  animation: sf-wave 0.55s ease-in-out infinite alternate;
+}
+@keyframes sf-wave {
+  from { transform: rotate(-80deg); }
+  to   { transform: rotate(-38deg); }
+}
+
+/* ── Dog ─────────────────────────────────────────────────────── */
+
+.dog-fl  { transform-box: view-box; transform-origin: 8px 6px;  animation: dog-leg 0.38s ease-in-out infinite alternate; }
+.dog-fr  { transform-box: view-box; transform-origin: 10px 6px; animation: dog-leg 0.38s ease-in-out infinite alternate-reverse; }
+.dog-bl  { transform-box: view-box; transform-origin: 16px 6px; animation: dog-leg 0.38s ease-in-out infinite alternate-reverse; }
+.dog-br  { transform-box: view-box; transform-origin: 18px 6px; animation: dog-leg 0.38s ease-in-out infinite alternate; }
+.dog-tail { transform-box: view-box; transform-origin: 20px 6px; animation: dog-wag 0.3s ease-in-out infinite alternate; }
+
+@keyframes dog-leg {
+  from { transform: rotate(-20deg); }
+  to   { transform: rotate(20deg); }
+}
+@keyframes dog-wag {
+  from { transform: rotate(-25deg); }
+  to   { transform: rotate(25deg); }
+}
+
+/* ── Accessibility ───────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .char-stage { display: none; }
+}

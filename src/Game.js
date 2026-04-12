@@ -347,6 +347,17 @@ export default function Game() {
     return () => window.removeEventListener('keydown', onKey);
   }, [jump]);
 
+  // ── Touch — tap anywhere except links / buttons triggers jump ──
+  useEffect(() => {
+    const onTouch = (e) => {
+      if (e.target.closest('a, button')) return;
+      e.preventDefault(); // kill 300 ms delay and prevent scroll during play
+      jump();
+    };
+    document.addEventListener('touchstart', onTouch, { passive: false });
+    return () => document.removeEventListener('touchstart', onTouch);
+  }, [jump]);
+
   // ── Canvas setup + resize ────────────────────────────────────
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -397,6 +408,9 @@ export default function Game() {
           <span className="game-hi">hi {String(highScore).padStart(5,'0')}</span>
         )}
       </div>
+      {phase === 'idle' && (
+        <span className="game-hint">press spacebar to start</span>
+      )}
     </div>
   );
 }

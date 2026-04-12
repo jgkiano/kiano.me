@@ -1,0 +1,21 @@
+# HTML — always revalidate so users get the latest deploy
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Hashed static assets — cache forever (CRA adds content hashes to filenames)
+/static/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Icons and manifest
+/logo192.png
+  Cache-Control: public, max-age=31536000, immutable
+/logo512.png
+  Cache-Control: public, max-age=31536000, immutable
+/apple-touch-icon.png
+  Cache-Control: public, max-age=31536000, immutable
+/favicon.ico
+  Cache-Control: public, max-age=86400
+
+# Service worker — never cache, always fresh
+/sw.js
+  Cache-Control: no-cache, no-store, must-revalidate

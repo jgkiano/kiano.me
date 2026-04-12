@@ -176,7 +176,8 @@ function safeSpawnX(cw, obstacles, powerups) {
     ...powerups.map(e => ({ left: e.x, right: e.x + e.size })),
   ];
   for (let i = 0; i < 10; i++) {
-    const blocker = entities.find(e => x < e.right + minGap && x + minGap > e.left);
+    const cx = x;
+    const blocker = entities.find(e => cx < e.right + minGap && cx + minGap > e.left);
     if (!blocker) return x;
     x = blocker.right + minGap;
   }

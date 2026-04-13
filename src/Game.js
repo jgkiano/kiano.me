@@ -395,6 +395,7 @@ export default function Game() {
 
   return (
     <div className="game-wrap">
+      <img src="/man.png" className="game-memoji" alt="" aria-hidden="true" />
       <canvas ref={canvasRef} className="game-canvas" onClick={jump} />
       <div className={`game-ui${showUI ? '' : ' game-ui--hidden'}`}>
         {phase === 'dead' && (

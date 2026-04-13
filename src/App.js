@@ -22,6 +22,9 @@ function App() {
 
 return (
     <div className="page">
+      <div className="mobile-banner" aria-hidden="true">
+        <span className="mobile-banner-accent">✦</span> experience enhanced on desktop
+      </div>
       <header className="site-header">
         <nav className="header-links" aria-label="Links">
           {config.links.map(({ label, href }, i) => (

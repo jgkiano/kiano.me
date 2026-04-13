@@ -4,9 +4,17 @@
   min-height: 100vh;
   min-height: 100svh;
   display: grid;
-  grid-template-rows: auto 1fr auto auto;
+  grid-template-rows: auto auto 1fr auto auto;
   padding: 0 3rem;
   position: relative;
+}
+
+.mobile-banner {
+  display: none;
+}
+
+.mobile-banner-accent {
+  color: var(--accent);
 }
 
 /* ── Header ────────────────────────────────────────────────── */
@@ -294,6 +302,20 @@
 @media (max-width: 600px) {
   .page {
     padding: 0 1.5rem;
+  }
+
+  .mobile-banner {
+    display: block;
+    margin: 0 -1.5rem;
+    padding: 0.5rem 1.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
+    background: rgba(34, 211, 238, 0.03);
+    border-bottom: 1px solid rgba(34, 211, 238, 0.08);
+    opacity: 0;
+    animation: fadeIn 0.4s ease forwards 0.1s;
   }
 
   .main {

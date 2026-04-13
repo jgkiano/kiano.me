@@ -1,13 +1,36 @@
 .game-wrap {
   margin-left: -3rem;
   width: calc(100% + 6rem);
-  border-top: 1px solid var(--border);
   position: relative;
   overflow: hidden;
-  padding-bottom: 0.25rem;
   user-select: none;
   -webkit-user-select: none;
 }
+
+.game-wrap::before,
+.game-wrap::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.game-wrap::before {
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 6rem;
+  background: linear-gradient(to right, #0a0a0a, transparent);
+}
+
+.game-wrap::after {
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 6rem;
+  background: linear-gradient(to left, #0a0a0a, transparent);
+}
+
 
 .game-canvas {
   display: block;
@@ -15,6 +38,8 @@
   height: 200px;
   cursor: pointer;
   touch-action: manipulation;
+  -webkit-mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 55%, transparent 100%);
 }
 
 /* UI overlay (play / dead screen) */
@@ -34,9 +59,9 @@
 .game-play-btn {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: var(--text-muted);
+  color: #a1a1aa;
   background: transparent;
-  border: 1px solid var(--border);
+  border: 1px solid #3f3f46;
   padding: 0.25rem 0.75rem;
   border-radius: 2px;
   cursor: pointer;
@@ -57,18 +82,6 @@
   50%       { opacity: 1; }
 }
 
-.game-hint {
-  position: absolute;
-  bottom: 0.625rem;
-  width: 100%;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.5625rem;
-  color: #3f3f46;
-  letter-spacing: 0.08em;
-  pointer-events: none;
-}
-
 .game-memoji {
   display: none;
 }
@@ -76,14 +89,14 @@
 .game-result {
   font-family: var(--font-mono);
   font-size: 0.6875rem;
-  color: var(--text-muted);
+  color: #a1a1aa;
   letter-spacing: 0.04em;
 }
 
 .game-hi {
   font-family: var(--font-mono);
   font-size: 0.625rem;
-  color: #3f3f46;
+  color: #71717a;
   letter-spacing: 0.04em;
 }
 
@@ -101,7 +114,6 @@
     height: auto;
     padding: 2rem 0 2.5rem;
   }
-  .game-hint { display: none; }
   .game-canvas { display: none; }
   .game-ui { display: none; }
   .game-memoji {

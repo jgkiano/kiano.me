@@ -41,8 +41,7 @@ function hsSet(v) { localStorage.setItem('k-hs', String(v)); }
 // ── Draw helpers ──────────────────────────────────────────────
 
 function drawBackground(ctx, cw) {
-  // Base — barely lighter than page bg to give the game its own plane
-  ctx.fillStyle = '#0d0d0d';
+  ctx.fillStyle = '#0a0a0a';
   ctx.fillRect(0, 0, cw, H);
 
   // Subtle dot grid
@@ -148,7 +147,7 @@ function drawHUD(ctx, score, cw, speedMult, frame) {
   ctx.font         = '11px "JetBrains Mono", monospace';
   ctx.textAlign    = 'right';
   ctx.textBaseline = 'top';
-  ctx.fillStyle    = '#3f3f46';
+  ctx.fillStyle    = '#71717a';
   ctx.fillText(
     `HI ${String(hi).padStart(5,'0')}  ${String(Math.floor(score)).padStart(5,'0')}`,
     cw - 16, 10
@@ -410,9 +409,6 @@ export default function Game() {
           <span className="game-hi">hi {String(highScore).padStart(5,'0')}</span>
         )}
       </div>
-      {phase === 'idle' && (
-        <span className="game-hint">press spacebar to start</span>
-      )}
     </div>
   );
 }
